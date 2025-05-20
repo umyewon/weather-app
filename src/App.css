@@ -33,3 +33,26 @@ body {
   font-family: "Jua", sans-serif;
   font-style: normal;
 }
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.errorMsg {
+    font-family: "Jua", sans-serif;
+    font-style: normal;
+    color : #ffffff;
+    background-color : rgba(255, 32, 32, 0.61);
+    animation: blink 1s infinite; /* 1초 간격으로 무한 반복 */
+    height: 100px;
+    padding : 20px;
+    border-radius: 10px;
+}

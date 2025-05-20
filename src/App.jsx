@@ -13,10 +13,13 @@ import WeatherButton from './component/WeatherButton'
 // 4. 현재 위치 & 도시 버튼을 클릭하면 도시 별 날씨 조회
 // 5. 데이터를 가져오는 동안 로딩 스피너가 돈다.
 function App() {
-  const [weather, setWeather] = useState(null);
-  const cities = ['Seoul', 'Paris', 'New York'];
-  const [city, setCity] = useState('');
-  const [loading, setLoading] = useState(false);
+  const API_KEY = "7fcffc196a363dd854adda9de7124a11";  // API 키
+  const cities = ['Seoul', 'Paris', 'New York'];       // 도시 정보
+
+  const [weather, setWeather] = useState(null);        // 날씨 설정
+  const [city, setCity] = useState('');                // 날짜 설정
+  const [loading, setLoading] = useState(false);       // 로딩바 설정
+  const [apiError, setApiError] = useState(true);        // 에러설정
 
   const getCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition((position)=>{
@@ -27,20 +30,30 @@ function App() {
   }
 
   const getWeatherByCurrentLocation = async(lat, lon) => {
-    let appId = "7fcffc196a363dd854adda9de7124a11";
-    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${appId}&lang=kr&units=metric`;
-    setLoading(true);
-    let response = await fetch(url) // async 함수여야 await 사용 가능
-    let data = await response.json();
-    setWeather(data);
+    try{
+      let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&lang=kr&units=metric`;
+      setLoading(true);
+      let response = await fetch(url) // async 함수여야 await 사용 가능
+      let data = await response.json();
+      setWeather(data);
+    } catch(err){
+      console.log(err.message);
+      setApiError(err.message);
+      setLoading(false);
+    }
   }
 
   const getWeatherByCity = async() => {
-    let appId = "7fcffc196a363dd854adda9de7124a11";
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${appId}&lang=kr&units=metric`;
-    let response = await fetch(url) // async 함수여야 await 사용 가능
-    let data = await response.json();
-    setWeather(data);
+    try{
+      let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&lang=kr&units=metric`;
+      let response = await fetch(url) // async 함수여야 await 사용 가능
+      let data = await response.json();
+      setWeather(data);
+    } catch(err){
+      console.log(err.message);
+      setApiError(err.message);
+      setLoading(false);
+    }
   }
 
   useEffect(()=>{
@@ -63,12 +76,12 @@ function App() {
           size={180}
           aria-label="Loading Spinner"
           data-testid="loader"
-          /> :  
+          /> : !apiError ? 
       (<div className="container">
         <WeatherBox weather={weather} />
         <br/>
         <WeatherButton cities={cities} setCity={setCity} selectedCity={city}  />
-      </div>)
+      </div>) : <div className="container errorMsg"><h2>잠시 후 다시 시도해 주십시오.</h2></div>
       }
     </div>
   )
