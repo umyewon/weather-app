@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+body {
+    background-image: url('./image/weather_forecast.jpg');
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.weather-box {
+    background-color: #ffe1877a;
+    padding : 20px;
+    border-radius: 10px;
+    width: 350px;
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.weather-font {
+  font-family: "Jua", sans-serif;
+  font-style: normal;
+}
