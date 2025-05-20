@@ -19,7 +19,7 @@ function App() {
   const [weather, setWeather] = useState(null);        // 날씨 설정
   const [city, setCity] = useState('');                // 날짜 설정
   const [loading, setLoading] = useState(false);       // 로딩바 설정
-  const [apiError, setApiError] = useState(true);        // 에러설정
+  const [apiError, setApiError] = useState('');        // 에러설정
 
   const getCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition((position)=>{
